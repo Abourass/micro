@@ -1,5 +1,5 @@
 {
-  "name": "@username/micro",
+  "name": "@abourass/micro",
   "version": "1.0.0",
   "description": "A micro library of chainable DOM functions in the heart of jQuery but without bloat",
   "main": "index.js",
