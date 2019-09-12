@@ -1,0 +1,12 @@
+{
+  "name": "microQuery",
+  "version": "1.0.0",
+  "description": "A micro library of chainable DOM functions in the heart of jQuery but without bloat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
