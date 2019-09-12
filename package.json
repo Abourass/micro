@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Abourass/microQuery/issues"
   },
-  "homepage": "https://github.com/Abourass/microQuery#readme"
+  "homepage": "https://github.com/Abourass/microQuery#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
