@@ -1,5 +1,5 @@
 {
-  "name": "@abourass/micro",
+  "name": "@username/micro",
   "version": "1.0.0",
   "description": "A micro library of chainable DOM functions in the heart of jQuery but without bloat",
   "main": "index.js",
@@ -7,6 +7,14 @@
     "test": "echo \"Error: no test specified\""
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "Antonio Bourassa (Abourass)",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Abourass/microQuery.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Abourass/microQuery/issues"
+  },
+  "homepage": "https://github.com/Abourass/microQuery#readme"
 }
