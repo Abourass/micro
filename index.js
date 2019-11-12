@@ -118,7 +118,7 @@ export const µAll = async(selector) => {
 export const Ω = function(element, idForNewElement, appendTo) {
   const newEl = document.createElement(element);
   newEl.id = idForNewElement;
-  document.getElementById(appendTo).appendChild(newEl);
+  document.querySelector(appendTo).appendChild(newEl);
   return µ(idForNewElement);
 };
 
