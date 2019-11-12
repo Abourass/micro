@@ -130,10 +130,16 @@ export const ΩMany = function(arrayOfObjects){
   })
 };
 
+export const ΩCSS = function(styles){
+  const css = document.createElement('style'); css.type = 'text/css';
+  if (css.styleSheet){ css.styleSheet.cssText = styles; } else { css.appendChild(document.createTextNode(styles)); }
+  document.getElementsByTagName('head')[0].appendChild(css);
+};
+
 export const pageDone = function(cb){ // Replaces jQuery document ready
   if (document.readyState === 'complete' || (document.readyState !== 'loading' && !document.documentElement.doScroll)) {
     cb();
   } else { document.addEventListener('DOMContentLoaded', cb); }
 };
 
-export default {µ, µAll, Ω, ΩMany, pageDone};
+export default {µ, µAll, Ω, ΩMany, ΩCSS, pageDone};
