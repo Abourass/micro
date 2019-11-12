@@ -81,7 +81,11 @@ export const µ = function(selector) {
       el.name = name;
       el.type = type;
       return this;
-    }
+    },
+    labelFor(elementTheLabelIsFor){
+      el.for = elementTheLabelIsFor;
+      return this;
+  }
   };
   el = obj.grab(selector);
   return obj;
