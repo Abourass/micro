@@ -68,6 +68,19 @@ export const µ = function(selector) {
       const textEl = document.createTextNode(string.toString());
       el.appendChild(textEl);
       return this
+    },
+    type(type){
+      el.type = type;
+      return this;
+    },
+    name(name){
+      el.name = name;
+      return this;
+    },
+    intro({name, type} = {}){
+      el.name = name;
+      el.type = type;
+      return this;
     }
   };
   el = obj.grab(selector);
@@ -110,6 +123,18 @@ export const µAll = async(selector) => {
       el.forEach((singleEl) => { singleEl.textContent = string.toString(); });
       return this;
     },
+    type(type){
+      el.forEach((singleEl) => { singleEl.type = type;});
+      return this;
+    },
+    name(name){
+      el.forEach((singleEl) => { singleEl.name = name;});
+      return this;
+    },
+    intro({name, type} = {}){
+      el.forEach((singleEl) => { singleEl.name = name; singleEl.type = type;});
+      return this;
+    }
   };
   el = obj.grabAll(selector);
   return obj;
