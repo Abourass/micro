@@ -46,9 +46,29 @@ export const µ = function(selector) {
       el.parentNode.removeChild(el);
       return this;
     },
-    text(string) {
-      el.textContent = string.toString();
+    set(obj) {
+      Object.keys(obj).forEach((key) => {
+        el.setAttribute(key, obj[key])
+      });
+      return this;
     },
+    child(element, silent){
+      if (!silent){
+        el.appendChild(element);
+      } else {
+        el.append(element);
+      }
+      return this
+    },
+    text(txt){
+      el.textContent = txt.toString();
+      return this;
+    },
+    textChild(string){
+      const textEl = document.createTextNode(string.toString());
+      el.appendChild(textEl);
+      return this
+    }
   };
   el = obj.grab(selector);
   return obj;
@@ -94,4 +114,26 @@ export const µAll = async(selector) => {
   el = obj.grabAll(selector);
   return obj;
 };
-export default {µ, µAll};
+
+export const Ω = function(element, idForNewElement, appendTo) {
+  const newEl = document.createElement(element);
+  newEl.id = idForNewElement;
+  document.getElementById(appendTo).appendChild(newEl);
+  return µ(idForNewElement);
+};
+
+export const ΩMany = function(arrayOfObjects){
+  arrayOfObjects.forEach(obj => {
+    const newEl = document.createElement(obj.element);
+    newEl.id = obj.idForNewElement;
+    document.querySelector(obj.appendTo).appendChild(newEl)
+  })
+};
+
+export const pageDone = function(cb){ // Replaces jQuery document ready
+  if (document.readyState === 'complete' || (document.readyState !== 'loading' && !document.documentElement.doScroll)) {
+    cb();
+  } else { document.addEventListener('DOMContentLoaded', cb); }
+};
+
+export default {µ, µAll, Ω, ΩMany, pageDone};
