@@ -119,7 +119,7 @@ export const Ω = function(element, idForNewElement, appendTo) {
   const newEl = document.createElement(element);
   newEl.id = idForNewElement;
   document.querySelector(appendTo).appendChild(newEl);
-  return µ(idForNewElement);
+  return µ(`#idForNewElement`);
 };
 
 export const ΩMany = function(arrayOfObjects){
