@@ -82,8 +82,8 @@ export const µ = function(selector) {
       el.type = type;
       return this;
     },
-    labelFor(elementTheLabelIsFor){
-      el.for = elementTheLabelIsFor;
+    htmlFor(elementTheLabelIsFor){
+      el.htmlFor = elementTheLabelIsFor;
       return this;
   }
   };
