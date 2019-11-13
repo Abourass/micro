@@ -148,6 +148,9 @@ export const µ = function(selector) {
     position(){
       return {left: el.offsetLeft, top: el.offsetTop}
     },
+    and(value, methodToAdd){
+      return {...value, ...methodToAdd}
+    },
     offset(){
       const box = el.getBoundingClientRect();
       return {
