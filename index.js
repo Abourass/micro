@@ -145,11 +145,30 @@ export const µ = function(selector) {
     diameter(){
       return {width: el.scrollWidth, height: el.scrollHeight}
     },
+    stats(){
+      const box = el.getBoundingClientRect();
+      const styles = window.getComputedStyle(el);
+      const height = el.offsetHeight;
+      const width = el.offsetWidth;
+      const borderTopWidth = parseFloat(styles.borderTopWidth);
+      const borderBottomWidth = parseFloat(styles.borderBottomWidth);
+      const paddingTop = parseFloat(styles.paddingTop);
+      const paddingBottom = parseFloat(styles.paddingBottom);
+      const restrictedHeight = height - borderBottomWidth - borderTopWidth - paddingTop - paddingBottom;
+      const restrictedWidth = width - borderBottomWidth - borderTopWidth - paddingTop - paddingBottom;
+      return {
+        offsetTop: box.top + window.pageYOffset - document.documentElement.clientTop,
+        offsetLeft: box.left + window.pageXOffset - document.documentElement.clientLeft,
+        positionTop: el.offsetTop,
+        positionLeft: el.offsetLeft,
+        heightRestricted: restrictedHeight,
+        widthRestricted: restrictedWidth,
+        height: el.scrollHeight,
+        width: el.scrollWidth
+      }
+    },
     position(){
       return {left: el.offsetLeft, top: el.offsetTop}
-    },
-    and(value, methodToAdd){
-      return {...value, ...methodToAdd}
     },
     offset(){
       const box = el.getBoundingClientRect();
