@@ -142,6 +142,9 @@ export const µ = function(selector) {
       const paddingBottom = parseFloat(styles.paddingBottom);
       return width - borderBottomWidth - borderTopWidth - paddingTop - paddingBottom;
     },
+    diameter(){
+      return {width: el.scrollWidth, height: el.scrollHeight}
+    },
     position(){
       return {left: el.offsetLeft, top: el.offsetTop}
     },
