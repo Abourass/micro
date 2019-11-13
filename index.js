@@ -27,6 +27,17 @@ export const µ = function(selector) {
       el.classList.remove(className);
       return this;
     },
+    hasClass(className){
+      return el.classList.contains(className)
+    },
+    css(arrayOrObject){
+      if (Array.isArray(arrayOrObject)){
+        arrayOrObject.forEach(obj => { el.style[Object.keys(obj)[0]] = obj.value; })
+      } else {
+        el.style[Object.keys(arrayOrObject)[0]] = arrayOrObject.value;
+      }
+      return this;
+    },
     replaceWith(string) {
       el.outerHTML = string;
       return this;
@@ -38,6 +49,17 @@ export const µ = function(selector) {
         el.innerHTML = string;
         return this;
       }
+    },
+    empty(){
+      el.innerHTML = null;
+      return this;
+    },
+    wrap(classForDiv){
+      const wrapper = document.createElement('div');
+      wrapper.className = classForDiv;
+      el.parentNode.insertBefore(wrapper, el);
+      el.parentNode.removeChild(el);
+      wrapper.appendChild(el);
     },
     context(){
       return el.outerHTML;
@@ -52,12 +74,9 @@ export const µ = function(selector) {
       });
       return this;
     },
-    child(element, silent){
-      if (!silent){
-        el.appendChild(element);
-      } else {
-        el.append(element);
-      }
+    child(element, insertAt = null){
+      if (insertAt === 'append' || insertAt == null) { el.append(element); }
+      if (insertAt === 'prepend'){ el.prepend(element) }
       return this
     },
     text(txt){
@@ -85,7 +104,69 @@ export const µ = function(selector) {
     htmlFor(elementTheLabelIsFor){
       el.htmlFor = elementTheLabelIsFor;
       return this;
-  }
+    },
+    find(element){
+      return el.querySelectorAll(element)
+    },
+    siblings(){
+      return Array.from(el.parentNode.children).filter((child) => child !== el);
+    },
+    previous(){
+      return el.previousElementSibling;
+    },
+    next(){
+      return el.nextElementSibling
+    },
+    val(newVal){
+      el.value = newVal;
+      return this;
+    },
+    data(dataSuffix){
+      return el.getAttribute(`data-${dataSuffix}`)
+    },
+    height(){
+      const styles = window.getComputedStyle(el);
+      const height = el.offsetHeight;
+      const borderTopWidth = parseFloat(styles.borderTopWidth);
+      const borderBottomWidth = parseFloat(styles.borderBottomWidth);
+      const paddingTop = parseFloat(styles.paddingTop);
+      const paddingBottom = parseFloat(styles.paddingBottom);
+      return height - borderBottomWidth - borderTopWidth - paddingTop - paddingBottom;
+    },
+    width(){
+      const styles = window.getComputedStyle(el);
+      const width = el.offsetWidth;
+      const borderTopWidth = parseFloat(styles.borderTopWidth);
+      const borderBottomWidth = parseFloat(styles.borderBottomWidth);
+      const paddingTop = parseFloat(styles.paddingTop);
+      const paddingBottom = parseFloat(styles.paddingBottom);
+      return width - borderBottomWidth - borderTopWidth - paddingTop - paddingBottom;
+    },
+    position(){
+      return {left: el.offsetLeft, top: el.offsetTop}
+    },
+    offset(){
+      const box = el.getBoundingClientRect();
+      return {
+        top: box.top + window.pageYOffset - document.documentElement.clientTop,
+        left: box.left + window.pageXOffset - document.documentElement.clientLeft
+      };
+    },
+    load(url, completeCallback = null){
+      if (completeCallback == null){
+        fetch(url).then(data => data.text()).then(data => { el.innerHTML = data });
+      } else {
+        fetch(url).then(data => data.text()).then(data => { el.innerHTML = data }).then(completeCallback)
+      }
+      return this;
+    },
+    on(eventName, eventHandler){
+      el.addEventListener(eventName, eventHandler);
+      return this;
+    },
+    off(eventName, eventHandler) {
+      el.removeEventListener(eventName, eventHandler);
+    }
   };
   el = obj.grab(selector);
   return obj;
@@ -138,6 +219,30 @@ export const µAll = async(selector) => {
     intro({name, type} = {}){
       el.forEach((singleEl) => { singleEl.name = name; singleEl.type = type;});
       return this;
+    },
+    wrap(classForDivs){
+      el.forEach((element) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = classForDivs;
+        element.parentNode.insertBefore(wrapper, element);
+        element.parentNode.removeChild(element);
+        wrapper.appendChild(element);
+      })
+    },
+    load(url, completeCallback = null){
+      if (completeCallback == null){
+        el.forEach((element) => {fetch(url).then(data => data.text()).then(data => { element.innerHTML = data });})
+      } else {
+        el.forEach((element) => {fetch(url).then(data => data.text()).then(data => { element.innerHTML = data }).then(completeCallback)})
+      }
+      return this;
+    },
+    on(eventName, eventHandler){
+      el.forEach((element) => {element.addEventListener(eventName, eventHandler);});
+      return this;
+    },
+    off(eventName, eventHandler){
+      el.forEach((element) => {element.removeEventListener(eventName, eventHandler);})
     }
   };
   el = obj.grabAll(selector);
@@ -166,9 +271,52 @@ export const ΩCSS = function(styles){
 };
 
 export const pageDone = function(cb){ // Replaces jQuery document ready
-  if (document.readyState === 'complete' || (document.readyState !== 'loading' && !document.documentElement.doScroll)) {
+  if (document.readyState === 'complete' || document.readyState !== 'loading') {
     cb();
   } else { document.addEventListener('DOMContentLoaded', cb); }
 };
 
-export default {µ, µAll, Ω, ΩMany, ΩCSS, pageDone};
+export const windowHeight = ({scrollbar}={}) => {
+  if (scrollbar){ return window.document.documentElement.clientHeight; }
+  return window.innerHeight
+};
+
+export const windowWidth = ({scrollbar}={}) => {
+  if (scrollbar){ return window.document.documentElement.clientWidth; }
+  return window.innerWidth
+};
+
+export const documentHeight = () => {
+  const body = document.body;
+  const html = document.documentElement;
+  return Math.max(
+    body.offsetHeight, body.scrollHeight,
+    html.clientHeight, html.offsetHeight, html.scrollHeight
+  );
+};
+
+export const documentWidth = () => {
+  const body = document.body;
+  const html = document.documentElement;
+  return Math.max(
+    body.offsetWidth, body.scrollWidth,
+    html.clientWidth, html.offsetWidth, html.scrollWidth
+  );
+};
+
+export const scrollTop = () => { (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop; };
+
+export default {
+  µ,
+  µAll,
+  Ω,
+  ΩMany,
+  ΩCSS,
+  pageDone,
+  windowHeight,
+  windowWidth,
+  documentHeight,
+  documentWidth,
+  scrollTop
+};
+
