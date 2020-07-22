@@ -1,9 +1,9 @@
 export const µ = function(selector) {
   let el;
-  const obj = {
-    grab() {
+  const tools = {
+    grab(tempSelector) {
       if (el) return el;
-      return document.querySelector(selector);
+      return document.querySelector(tempSelector);
     },
     toggleClass(className) {
       el.classList.toggle(className);
@@ -38,6 +38,12 @@ export const µ = function(selector) {
       el.outerHTML = string;
       return this;
     },
+    replaceWithElement(element, idForNewElement = null){
+      const newEl = document.createElement(element), idToUse = idForNewElement || el.id;
+      newEl.id = idToUse;
+      el.parentNode.replaceChild(newEl, el);
+      return µ(`#${idToUse}`);
+    },
     html(string) {
       if (!string) {
         return el.innerHTML;
@@ -59,6 +65,10 @@ export const µ = function(selector) {
     context(){
       return el.outerHTML;
     },
+    src(srcString){
+      el.src = srcString;
+      return this;
+    },
     remove() {
       el.parentNode.removeChild(el);
       return this;
@@ -73,6 +83,9 @@ export const µ = function(selector) {
       if (insertAt === 'append' || insertAt == null) { el.append(element); }
       if (insertAt === 'prepend'){ el.prepend(element); }
       return this;
+    },
+    children(){
+      return el.childNodes;
     },
     text(txt){
       el.textContent = txt.toString();
@@ -96,6 +109,11 @@ export const µ = function(selector) {
       el.type = type;
       return this;
     },
+    input(type){
+      el.name = el.id;
+      el.type = type;
+      return this;
+    },
     htmlFor(elementTheLabelIsFor){
       el.htmlFor = elementTheLabelIsFor;
       return this;
@@ -112,7 +130,10 @@ export const µ = function(selector) {
     next(){
       return el.nextElementSibling;
     },
-    val(newVal){
+    val(newVal = null){
+      if (newVal == null) {
+        return el.value;
+      }
       el.value = newVal;
       return this;
     },
@@ -176,7 +197,7 @@ export const µ = function(selector) {
       if (completeCallback == null){
         fetch(url).then(data => data.text()).then((data) => { el.innerHTML = data; });
       } else {
-        fetch(url).then(data => data.text()).then((data) => { el.innerHTML = data; }).then(completeCallback);
+        fetch(url).then(data => data.text()).then((data) => { el.innerHTML = data; }).then(completeCallback());
       }
       return this;
     },
@@ -188,8 +209,8 @@ export const µ = function(selector) {
       el.removeEventListener(eventName, eventHandler);
     },
   };
-  el = obj.grab(selector);
-  return obj;
+  el = tools.grab(selector);
+  return tools;
 };
 
 export const µAll = async(selector) => {

@@ -1,4 +1,4 @@
-import {µ} from './index';
+import {µ} from './micro.js';
 
 const Φ = function(element, idForNewElement, appendTo, cb) {
   const newEl = document.createElement(element);

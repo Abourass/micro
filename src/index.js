@@ -19,12 +19,14 @@ const helpers = {
   recase,
 };
 
-exports = {
-  µ,
-  µAll,
-  Ω,
-  ΩCSS,
-  ΩMany,
-  Φ,
-  helpers
+export const greek = {
+  µ: µ,
+  µAll: µAll,
+  Ω: Ω,
+  ΩCSS: ΩCSS,
+  ΩMany: ΩMany,
+  Φ: Φ,
+  helpers: helpers
 };
+
+export default greek;
