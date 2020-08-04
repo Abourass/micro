@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "ES6",
+    "target":  "ES2020",
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "esModuleInterop": true,
+    "alwaysStrict": true,
+    "declaration": true,
+    "allowUmdGlobalAccess": true,
+    "outDir": "./dist"
+  },
+  "files": [
+    "./src/helperFn.ts",
+    "./src/index.ts",
+    "./src/micro.ts",
+    "./src/omega.ts",
+    "./src/phi.ts"
+  ]
+}
