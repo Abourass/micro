@@ -1,6 +1,6 @@
 {
   "name": "@abourass/micro",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "A micro library of chainable DOM functions in the heart of jQuery but without bloat",
   "main": "./dist/index.js",
   "keywords": [],
