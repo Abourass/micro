@@ -101,7 +101,7 @@ export const µ = function(selector: string): toolsInterface {
       el.parentNode.insertBefore(wrapper, el);
       el.parentNode.removeChild(el);
       wrapper.appendChild(el);
-      return this
+      return this;
     },
     context(): string {
       return el.outerHTML;
@@ -163,7 +163,7 @@ export const µ = function(selector: string): toolsInterface {
       return el.querySelectorAll(element);
     },
     siblings(): Node[] | Element[]| unknown[] {
-      return Array.from(el.parentNode.children).filter(child => child !== el);
+      return Array.from(el.parentNode.children).filter((child: Element): boolean => child !== el);
     },
     previous(): Element{
       return el.previousElementSibling;
@@ -236,9 +236,9 @@ export const µ = function(selector: string): toolsInterface {
     },
     load(url: string, completeCallback: () => any | PromiseLike<void> | null = null): toolsInterface {
       if (completeCallback == null){
-        fetch(url).then(data => data.text()).then((data) => { el.innerHTML = data; });
+        fetch(url).then((data: Response) => data.text()).then((data) => { el.innerHTML = data; });
       } else {
-        fetch(url).then(data => data.text()).then((data) => { el.innerHTML = data; }).then(completeCallback());
+        fetch(url).then((data: Response) => data.text()).then((data) => { el.innerHTML = data; }).then(completeCallback());
       }
       return this;
     },

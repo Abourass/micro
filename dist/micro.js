@@ -129,7 +129,7 @@ export const µ = function (selector) {
             return el.querySelectorAll(element);
         },
         siblings() {
-            return Array.from(el.parentNode.children).filter(child => child !== el);
+            return Array.from(el.parentNode.children).filter((child) => child !== el);
         },
         previous() {
             return el.previousElementSibling;
@@ -202,10 +202,10 @@ export const µ = function (selector) {
         },
         load(url, completeCallback = null) {
             if (completeCallback == null) {
-                fetch(url).then(data => data.text()).then((data) => { el.innerHTML = data; });
+                fetch(url).then((data) => data.text()).then((data) => { el.innerHTML = data; });
             }
             else {
-                fetch(url).then(data => data.text()).then((data) => { el.innerHTML = data; }).then(completeCallback());
+                fetch(url).then((data) => data.text()).then((data) => { el.innerHTML = data; }).then(completeCallback());
             }
             return this;
         },

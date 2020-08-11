@@ -159,7 +159,7 @@ const µ = function(selector) {
       return width - borderBottomWidth - borderTopWidth - paddingTop - paddingBottom;
     },
     diameter(){
-      return {width: el.scrollWidth, height: el.scrollHeight};
+      return ({width: el.scrollWidth, height: el.scrollHeight});
     },
     stats(){
       const box = el.getBoundingClientRect();
@@ -172,7 +172,7 @@ const µ = function(selector) {
       const paddingBottom = parseFloat(styles.paddingBottom);
       const restrictedHeight = height - borderBottomWidth - borderTopWidth - paddingTop - paddingBottom;
       const restrictedWidth = width - borderBottomWidth - borderTopWidth - paddingTop - paddingBottom;
-      return {
+      return ({
         offsetTop: box.top + window.pageYOffset - document.documentElement.clientTop,
         offsetLeft: box.left + window.pageXOffset - document.documentElement.clientLeft,
         positionTop: el.offsetTop,
@@ -181,10 +181,10 @@ const µ = function(selector) {
         widthRestricted: restrictedWidth,
         height: el.scrollHeight,
         width: el.scrollWidth,
-      };
+      });
     },
     position(){
-      return {left: el.offsetLeft, top: el.offsetTop};
+      return ({left: el.offsetLeft, top: el.offsetTop});
     },
     offset(){
       const box = el.getBoundingClientRect();
